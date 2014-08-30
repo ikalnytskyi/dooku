@@ -10,6 +10,11 @@
 """
 import unittest
 
+try:
+    from unittest import mock  # NOQA
+except:
+    import mock  # NOQA
+
 
 class DookuTestCase(unittest.TestCase):
     """
