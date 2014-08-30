@@ -34,7 +34,6 @@ setup(
     test_suite='tests',
 
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
 
