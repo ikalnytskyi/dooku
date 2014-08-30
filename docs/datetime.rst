@@ -11,6 +11,8 @@ was born during Holocron_ development where we were needed to do next things:
 
 As for now that's the only things the Dooku can handle.
 
+.. _Holocron: https://github.com/ikalnitsky/holocron
+
 
 How To Use?
 -----------

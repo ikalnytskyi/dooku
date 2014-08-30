@@ -14,5 +14,7 @@ How To Use?
 The module itself is well documented so I just provide you the functions'
 signatures and descriptions.
 
-.. automodule:: dooku.algorithm
-   :members:
+.. autofunction:: dooku.algorithm.all_of
+.. autofunction:: dooku.algorithm.any_of
+.. autofunction:: dooku.algorithm.find_if
+.. autofunction:: dooku.algorithm.none_of
