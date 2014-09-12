@@ -18,5 +18,5 @@
     :license: BSD, see LICENSE for details
 """
 
-__version__ = '0.1.0-beta'
+__version__ = '0.1.0-dev'
 __license__ = 'BSD'
