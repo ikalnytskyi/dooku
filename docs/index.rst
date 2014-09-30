@@ -35,3 +35,4 @@ Table of Content
    algorithm
    conf
    datetime
+   decorator
