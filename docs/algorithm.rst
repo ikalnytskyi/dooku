@@ -3,18 +3,26 @@
 dooku.algorithm
 ===============
 
-Algorithm is a part of Dooku that contains various algorithms that could be
-helpful in daily usage basis. The module is very small now, so please feel
-free to contribute.
+This part of Dooku contains various algorithms that are missed in Python's
+standard library and here they are:
 
 
-How To Use?
------------
-
-The module itself is well documented so I just provide you the functions'
-signatures and descriptions.
+all_of
+-------
 
 .. autofunction:: dooku.algorithm.all_of
+
+any_of
+------
+
 .. autofunction:: dooku.algorithm.any_of
+
+find_if
+-------
+
 .. autofunction:: dooku.algorithm.find_if
+
+none_of
+-------
+
 .. autofunction:: dooku.algorithm.none_of

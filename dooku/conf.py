@@ -4,7 +4,6 @@
     ~~~~~~~~~~
 
     The module provides a useful class to deal with configuration data.
-    More info here - :class:`~dooku.conf.Conf`.
 
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
@@ -17,37 +16,64 @@ class Conf(object):
     """
     A :class:`dict` wrapper that extends its functionality.
 
-    The class was designed with one purpose: to provide the more convinient
-    way to interact with a `dict` instance that keeps some configuration data.
-    In many ways it behaves exactly like a `dict`, but unlike the last one
-    its key may be a compound::
+    The class was designed with one purpose: to provide the more convenient
+    way to interact with dictionary instances that keep some configuration
+    data. In many ways it behaves exactly like a dictionary, but unlike the
+    last one it can be accessed by a *compound key* and supports *recursive
+    update*.
 
-        output_path = conf['holocron.paths.output']
+    A Compound Key is a key that consists of two or more keys that allow
+    you to retrieve value from subnode of subnode. For example, we have
+    the following structure ::
 
-    The above line will get a value of the following structure from a dict::
+        { 'ukraine': {
+            'kharkiv': {
+              'timezone': 'UTC+2', }, }, }
 
-        {
-            'holocron': {
-                'paths': {
-                    'output': 'path/to/output'
-                }
-            }
-        }
+    and you want to get the timezone's value with one query. Well, with
+    compound keys you can do it this way ::
 
-    If a requested value is missing, the fallback to default can be achieved
-    by using :meth:`get`::
+        timezone = conf['ukraine.kharkiv.timezone']
 
-        theme_path = conf.get('holocron.paths.theme', 'path/to/default/theme')
+    instead of usual ::
 
-    The constructor receives a list of dictionaries to create a conf based
-    on it. By default a compound key separator is a dot, but you can change
-    it by passing a seperator option to Conf's constructor::
+        timezone = conf['ukraine']['kharkiv']['timezone']
 
-        conf = Conf(default_conf, user_conf, separator='#')
+    On the other hand we have a usual dictionary behaviour:
 
-    :param confs: (list of dict|Conf) a list of conf data to be wrapped
-    :param separator: (str) a char that's used as separator in composite keys
+    * a ``KeyError`` exception will be thrown in case of key absence
+    * a :meth:`get` method is provided to retrieve values safely
+
+    The class overrides an :meth:`update` method so it can be used to
+    recursively update values. For example, we have the following structure ::
+
+        { 'ukraine': {
+            'kharkiv': {
+              'timezone': 'UTC+2', }, }, }
+
+    and want to update it with next one ::
+
+        { 'ukraine': {
+            'kharkiv': {
+              'population': '1 427 000', }, }, }
+
+    In vanilla Python's dictionary we will have the same result as statement
+    above since it completely overwrites top-level keys, but our class can
+    handle it properly and merge it automatically, so we will have next
+    result ::
+
+        { 'ukraine': {
+            'kharkiv': {
+              'timezone': 'UTC+2',
+              'population': '1 427 000', }, }, }
+
+    :param confs:
+        A list of dictionaries to create a Conf instance based on it.
+        Each next dictionary overrides settings from the previous one.
+    :param separator:
+        A character that's used as separator in compound keys
     """
+
     #: this character will be used as a separator in case you don't
     #: set a new one explicitly
     default_separator = '.'

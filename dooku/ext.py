@@ -6,11 +6,6 @@
     The module provides things that are allow you to load dynamically
     extensions. The idea is based on Python's ``entry_points``.
 
-    The provided stuff is similar to stevedore_, but more lightweight
-    and user-friendly.
-
-    .. _stevedore: http://stevedore.readthedocs.org/
-
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
@@ -19,23 +14,55 @@ import pkg_resources
 
 class ExtensionManager(object):
     """
-    The ExtensionManager is designed to load and manage your extensions.
+    Load and manage your extensions with fun!
 
-    The aim is to provide minimal functionality to interact with extension
-    collection. Please note,  the class interacts only with the exported
-    beings, so it doesn't try to create instances for those beings or
-    something like that.
+    The class was designed to provide a minimal functionality to interact
+    with extension collections. In many ways it works similar to
+    stevedore_, but unlike the last one it operates with *exported beings*
+    and doesn't create instances for those beings.
 
-    What you can to do with this class?
+    Well, what it means for you? It means...
 
-    * load extensions from a given namespace (using names or not);
-    * get extension object by name (w/ raising exception or not);
-    * iterate over loaded extensions
-    * check whether extension is loaded or not
+    * You can discover and load extensions from a given namespace.
+    * You can get extension (exported being) by name.
+    * You can iterate over discovered and loaded extensions.
+    * You can check whether extension is loaded or not.
 
-    :param namespace: (str) a namespace to import from
-    :param names: (list) a list of objects to import; imports all if ``None``
-    :param silent: (bool) skip loading errors if ``True``
+    Behind the class lies an idea to discover extensions by means
+    `entry_points`_. So the first thing you have to do is to declare
+    your plugin in ``setup.py`` and then install it::
+
+        sutup(
+            # ...
+            entry_points={
+                'my_plugin_namespace': [
+                    'plugin_name = my_package.my_plugin:MyPluginClass',
+                ]
+            }
+        )
+
+    After plugin installation it becomes available for discovering and
+    loading, so you probably want to get it::
+
+        from dooku.ext import ExtensionManager
+
+        for name, extension in ExtensionManager('my_plugin_namespace'):
+            # name is plugin_name
+            # extension is MyPluginClass
+
+    You also can load plugins selectively. Look at class parameters for
+    details.
+
+    :param namespace:
+        A namespace to import from as string.
+    :param names:
+        A list of objects to import; imports all if ``None``.
+    :param silent:
+        Skip loading errors if ``True``; otherwise - throw exception.
+
+    .. _stevedore:    https://stevedore.readthedocs.org/
+    .. _entry_points: https://pythonhosted.org/setuptools/setuptools.html
+                      #dynamic-discovery-of-services-and-plugins
     """
     def __init__(self, namespace, names=None, silent=False):
         #: `name` <-> `extensions list` map

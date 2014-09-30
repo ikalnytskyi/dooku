@@ -4,31 +4,16 @@
     ~~~~~~~~~~~~~~
 
     The package provides some helper things that you might need for datetime
-    manipulations:
-
-    * various formatters
-    * various tz classes
-
-    Usage example::
-
-        >>> import datetime
-        >>> from dooku.datetime import UTC, Local, to_iso8601
-        >>>
-        >>> dt = datetime.datetime.now(UTC)
-        >>> dt
-        datetime.datetime(2014, 5, 29, 20, 22, 17, 426248, tzinfo=<...>)
-        >>>
-        >>> dt = dt.astimezone(Local)
-        >>> dt
-        datetime.datetime(2014, 5, 29, 23, 22, 17, 426248, tzinfo=<...>)
-        >>>
-        >>> to_iso8601(dt)
-        '2014-05-29T23:22:17.426248+03:00'
+    manipulations: formatters and tz classes.
 
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
+# despite the fact we use python3 only, we still need this statement
+# in order to do not fail during sphinx execution.
 from __future__ import absolute_import
+
 
 import re
 import time
@@ -38,6 +23,9 @@ import datetime
 def to_iso8601(dt, tz=None):
     """
     Returns an ISO-8601 representation of a given datetime instance.
+
+        >>> to_iso8601(datetime.datetime.now())
+        '2014-10-01T23:21:33.718508Z'
 
     :param dt: a :class:`~datetime.datetime` instance
     :param tz: a :class:`~datetime.tzinfo` to use; if None - use a default one
@@ -53,18 +41,26 @@ def to_iso8601(dt, tz=None):
 
     return iso8601
 
-#: The RFC-3339 is a profile (subset) of more complex ISO-8601. Fortunately,
-#: :meth:`~datetime.datetime.isoformat` produces the RFC-3339 compatible
-#: output, so we can just make an alias for our :fun:`to_iso8601` function.
-#:
-#: Visit the next link for more details: http://www.ietf.org/rfc/rfc3339.txt
+#: The RFC-3339 is a profile (subset) of more complex ISO-8601. So it's
+#: just an alias for :func:`to_iso8601` function.
 to_rfc3339 = to_iso8601
 
 
 class UTC(datetime.tzinfo):
     """
-    Implements UTC tzinfo, so it can be used by :class:`~datetime.datetime`
-    instances.
+    Implements a UTC :class:`datetime.tzinfo`.
+
+    You can use it to attach timezone information to datetime instances.
+    Such information becomes useful if you want to represent a datetime
+    instance in various timezone notations.
+
+    Example:
+
+        >>> from dooku.datetime import UTC
+        >>> dt = datetime.datetime.now(UTC)
+        >>> dt
+        datetime.datetime(2014, 5, 29, 20, 22, 17, 426248, tzinfo=<...>)
+
     """
     def utcoffset(self, dt):
         return datetime.timedelta(0)
@@ -79,8 +75,22 @@ UTC = UTC()
 
 class Local(datetime.tzinfo):
     """
-    Implements local tzinfo, so it can be used by :class:`~datetime.datetime`
-    instances.
+    Implements a Local :class:`datetime.tzinfo`.
+
+    You can use it to attach timezone information to datetime instances.
+    Such information becomes useful if you want to represent a datetime
+    instance in various timezone notations.
+
+    Example:
+
+        >>> from dooku.datetime import UTC, Local
+        >>> dt = datetime.datetime.now(UTC)
+        >>> dt
+        datetime.datetime(2014, 5, 29, 20, 22, 17, 426248, tzinfo=<...>)
+        >>>
+        >>> dt = dt.astimezone(Local)
+        >>> dt
+        datetime.datetime(2014, 5, 29, 23, 22, 17, 426248, tzinfo=<...>)
     """
     @staticmethod
     def _is_dst(dt):

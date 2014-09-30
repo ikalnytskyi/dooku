@@ -3,8 +3,7 @@
     dooku.decorator
     ~~~~~~~~~~~~~~~
 
-    The module tries to implements various useful decorators for different
-    purposes. It's very poor now, but it's planned to be extended.
+    The module implements various useful decorators.
 
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
@@ -15,8 +14,8 @@ class cached_property(object):
     """
     Decorator that converts a method into a lazy property.
 
-    The method wrapped is called the first time to retrieve the result and
-    then that calculated result is used the next time you access the value::
+    The wrapped method is called the first time to retrieve the result and
+    then the calculated result is used next time you access the value::
 
         class Holocron(object):
 
@@ -28,11 +27,14 @@ class cached_property(object):
 
     .. admonition:: Implementation details
 
-        The property is implemented as non-data descriptor. That's mean, the
+        The property is implemented as non-data descriptor. That mean, the
         descriptor is invoked if there's no entry with the same name in the
         instance's ``__dict__``.
 
         This trick helps us to get rid of the function call overhead.
+
+    :param func:
+        A method to be wrapped.
     """
     def __init__(self, func):
         self.func = func
