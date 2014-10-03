@@ -16,7 +16,7 @@ class ExtensionManager(object):
     """
     Load and manage your extensions with fun!
 
-    The class was designed to provide a minimal functionality to interact
+    The class was designed to provide minimal functionality to interact
     with extension collections. In many ways it works similar to
     stevedore_, but unlike the last one it operates with *exported beings*
     and doesn't create instances for those beings.
@@ -28,7 +28,7 @@ class ExtensionManager(object):
     * You can iterate over discovered and loaded extensions.
     * You can check whether extension is loaded or not.
 
-    Behind the class lies an idea to discover extensions by means
+    Behind the class lies an idea to discover extensions by means of
     `entry_points`_. So the first thing you have to do is to declare
     your plugin in ``setup.py`` and then install it::
 
