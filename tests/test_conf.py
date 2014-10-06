@@ -8,6 +8,8 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+import collections
+
 from dooku.conf import Conf
 
 from . import DookuTestCase
@@ -198,7 +200,7 @@ class TestConf(DookuTestCase):
 
     def test_get_compound_key(self):
         """
-        The __getitem__ has to handle compund keys correctly.
+        The get has to handle compund keys correctly.
         """
         conf = Conf(self.source_conf)
 
@@ -313,6 +315,132 @@ class TestConf(DookuTestCase):
 
         self.assertSequenceEqual(conf, self.source_conf)
 
+    def test_keys(self):
+        """
+        The keys has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+
+        self.assertEqual(conf.keys(), self.source_conf.keys())
+
+    def test_items(self):
+        """
+        The items has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+
+        self.assertEqual(conf.items(), self.source_conf.items())
+
+    def test_values(self):
+        """
+        The values has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+
+        self.assertEqual(list(conf.values()), list(self.source_conf.values()))
+
+    def test_pop_simple_key(self):
+        """
+        The pop has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+        conf['non-root'] = 42
+        root = conf.pop('root')
+
+        self.assertNotIn('root', conf)
+        self.assertEqual(conf, {'non-root': 42})
+
+        self.assertIsInstance(root, Conf)
+        self.assertEqual(root, self.source_conf['root'])
+
+        self.assertRaises(KeyError, conf.pop, 'non-exists')
+
+        try:
+            conf.pop('non-exists-2', None)
+        except KeyError:
+            self.fail('pop() must be safe with explicit default!')
+
+    def test_pop_compound_key(self):
+        """
+        The pop has to handle compound keys correctly.
+        """
+        conf = Conf(self.source_conf)
+        two = conf.pop('root.two')
+
+        self.assertNotIn('two', conf['root'])
+        self.assertEqual(conf, {
+            'root': {
+                'one': {
+                    'a': 1,
+                    'b': 2,
+                },
+            }
+        })
+
+        self.assertIsInstance(two, Conf)
+        self.assertEqual(two, self.source_conf['root']['two'])
+
+        self.assertRaises(KeyError, conf.pop, 'root.non-exists')
+
+        try:
+            conf.pop('root.non-exists-2', None)
+        except KeyError:
+            self.fail('pop() must be safe with explicit default!')
+
+    def test_popitem(self):
+        """
+        The popitem has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+        root_key, root_value = conf.popitem()
+
+        self.assertEqual(root_key, 'root')
+        self.assertNotIn(root_key, conf)
+        self.assertEqual(conf, {})
+
+        self.assertIsInstance(root_value, Conf)
+        self.assertEqual(root_value, self.source_conf['root'])
+
+        self.assertRaises(KeyError, conf.popitem)
+
+    def test_clear(self):
+        """
+        The clear has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+        conf['non-root'] = 42
+
+        conf.clear()
+        self.assertEqual(conf, {})
+
+    def test_setdefault_simple_key(self):
+        """
+        The setdefault has to behave exactly like a dict's one.
+        """
+        conf = Conf(self.source_conf)
+        self.assertNotIn('non-root', conf)
+
+        non_root = conf.setdefault('non-root', 42)
+        self.assertIn('non-root', conf)
+        self.assertEqual(non_root, 42)
+
+        non_root = conf.setdefault('non-root', 13)
+        self.assertEqual(non_root, 42)
+
+    def test_setdefault_compound_key(self):
+        """
+        The setdefault has to handle compound keys correctly.
+        """
+        conf = Conf(self.source_conf)
+        self.assertNotIn('root.three', conf)
+
+        three = conf.setdefault('root.three', 42)
+        self.assertIn('root.three', conf)
+        self.assertEqual(three, 42)
+
+        three = conf.setdefault('root.three', 13)
+        self.assertEqual(three, 42)
+
     def test_len(self):
         """
         The __len__ has to behave exactly like a dict's one.
@@ -357,3 +485,17 @@ class TestConf(DookuTestCase):
         conf_b['non-root'] = 42
         self.assertNotEqual(conf_a, conf_b)
         self.assertNotEqual(conf_a, conf_b._data)
+
+    def test_is_mapping(self):
+        """
+        The Conf instance has to be an instance of collections.Mapping.
+        """
+        conf = Conf(self.source_conf)
+        self.assertIsInstance(conf, collections.Mapping)
+
+    def test_is_mutable_mapping(self):
+        """
+        The Conf instance has to be an instance of collections.MutableMapping.
+        """
+        conf = Conf(self.source_conf)
+        self.assertIsInstance(conf, collections.MutableMapping)

@@ -9,10 +9,11 @@
     :license: BSD, see LICENSE for details
 """
 import copy
+import collections
 import itertools
 
 
-class Conf(object):
+class Conf(collections.MutableMapping):
     """
     A :class:`dict` wrapper that extends its functionality.
 
@@ -105,32 +106,6 @@ class Conf(object):
         # iterate and update values
         _merge(self._data, iterable, kwargs.items())
 
-    def items(self):
-        """
-        Returns an iterator of a sequence of pairs ``(key, value)``, just
-        like it works for ``dict``.
-
-        :returns: (iter) an iterator of a sequence of key-value pairs
-        """
-        return self._data.items()
-
-    def get(self, compound_key, default=None):
-        """
-        Returns a value that's associated with a given compound key.
-
-        Unlike :meth:`__getitem__`, the method provides fallback to default
-        in case key doesn't exist.
-
-        :param compound_key: (str) a key for retrieving value
-        :param default: (object) a default value
-        :returns: (object) retrieved value if key exists; otherwise - default
-        """
-        try:
-            value = self[compound_key]
-        except KeyError:
-            value = default
-        return value
-
     def __getitem__(self, compound_key):
         """
         Returns a value that's associated with a given compound key.
@@ -181,33 +156,6 @@ class Conf(object):
         for key in keys[:-1]:
             conf = conf[key]
         del conf[keys[-1]]
-
-    def __contains__(self, compound_key):
-        """
-        Checks if a given compound key exists.
-
-        :param compound_key: (str) a key to check
-        :returns: (bool) True if exists; otherwise - False
-        """
-        try:
-            self[compound_key]
-        except KeyError:
-            return False
-        return True
-
-    def __eq__(self, other):
-        """
-        Equality operator implementation makes us possible to compare
-        Conf instances with other Conf instances, or even dictionaries.
-
-        :param other: (dict, Conf) an instance to compare with
-        :returns: True if `self` is equal to `other`; otherwise - False
-        """
-        if isinstance(other, dict):
-            return self._data == other
-        elif isinstance(other, Conf):
-            return self._data == other._data
-        return False
 
     def __iter__(self):
         return iter(self._data)
