@@ -16,18 +16,7 @@ world.
 Dooku is a self-contained library and there are no dependencies it requires.
 All you need is to install Dooku with pip and enjoy the process of using it.
 
-The documentation is divided into different parts, most of them describe
-the libraries that are part of Dooku.
-
-Some links if you interested in the project:
-
-* `Sources on GitHub <https://github.com/ikalnitsky/dooku>`_
-* `Report a bug <https://github.com/ikalnitsky/dooku/issues>`_
-* `Support me via GitTip <https://www.gittip.com/ikalnitsky/>`_
-
-
-Table of Content
-----------------
+Here the Dooku:
 
 .. toctree::
    :maxdepth: 2
@@ -37,3 +26,10 @@ Table of Content
    datetime
    decorator
    ext
+
+Some links if you interested in the project:
+
+* :doc:`The full changelog <changelog>`
+* `Sources on GitHub <https://github.com/ikalnitsky/dooku>`_
+* `Report a bug <https://github.com/ikalnitsky/dooku/issues>`_
+* `Support me via GitTip <https://www.gittip.com/ikalnitsky/>`_

@@ -1,9 +1,11 @@
-                             //  dooku  //
+Dooku
+=====
 
-                    a set of libraries for everyday
+  A set of libraries for everyday!
 
 
-~ What Is Dooku?
+What Is Dooku?
+--------------
 
   Dooku is a set of libraries for the Python programming language that
   provides various useful stuff that you might need in everyday usage.
@@ -17,13 +19,15 @@
   library to be a part of Dooku.
 
 
-~ Why The Name Dooku?
+Why The Name Dooku?
+-------------------
 
   Dooku is an interesting character from the Star Wars franchise. He is
   self-contained and powerful, exactly like this library itself.
 
 
-~ How To Install?
+How To Install?
+---------------
 
   Latest stable version:
 
@@ -34,6 +38,7 @@
       $ [sudo] pip install git+https://github.com/ikalnitsky/dooku.git
 
 
-~ How To Start?
+How To Start?
+-------------
 
   Just read the documentation http://dooku.readthedocs.org/ and enjoy!
