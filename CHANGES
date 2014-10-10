@@ -1,20 +1,21 @@
 ChangeLog
 =========
 
-  Here you can see the list of changes between each Dooku release.
+Here you can see the list of changes between each Dooku release.
 
 
 Version 0.2.0
 -------------
 
-  (release date to be announced)
+(release date to be announced)
 
-  - Use ``collections.MutableMapping`` as base class for ``dooku.conf.Conf``.
+- Use ``collections.MutableMapping`` as base class for ``dooku.conf.Conf``.
+- Add the changelog page to documentation.
 
 
 Version 0.1.0
 -------------
 
-  Released on October 3, 2014.
+Released on October 3, 2014.
 
-  - First public release.
+- First public release.
