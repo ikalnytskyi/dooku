@@ -58,7 +58,7 @@ class TestDatetimeTz(DookuTestCase):
         l_dst = datetime.timedelta(0)
         l_timezone = datetime.timedelta(seconds=-time.timezone)
 
-        if time.daylight:
+        if time.localtime().tm_isdst:
             l_dst = datetime.timedelta(seconds=time.altzone - time.timezone)
             l_timezone = datetime.timedelta(seconds=-time.altzone)
 
