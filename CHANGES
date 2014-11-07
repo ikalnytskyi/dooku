@@ -7,7 +7,7 @@ Here you can see the list of changes between each Dooku release.
 Version 0.2.0
 -------------
 
-(release date to be announced)
+Released on November 7, 2014.
 
 - Use ``collections.MutableMapping`` as base class for ``dooku.conf.Conf``.
 - Add the changelog page to documentation.
