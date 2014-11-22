@@ -14,7 +14,7 @@ from . import DookuTestCase, mock
 
 class TestExtensionManager(DookuTestCase):
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points')
+    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def setUp(self, iter_ep):
         """
         Prepare extensions for each testcase.
@@ -106,7 +106,7 @@ class TestExtensionManager(DookuTestCase):
             ('two', self.entry_points[1].load()),
             ('two', self.entry_points[2].load()), ]))
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points')
+    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def test_constructor_w_names(self, iter_ep):
         """
         If the names was passed to the constructor, only those extensions
@@ -119,7 +119,7 @@ class TestExtensionManager(DookuTestCase):
             ('two', self.entry_points[1].load()),
             ('two', self.entry_points[2].load()), ]))
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points')
+    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def test_silent_false(self, iter_ep):
         """
         The constructor has to raise exceptions if silent is False.
@@ -130,7 +130,7 @@ class TestExtensionManager(DookuTestCase):
         self.assertRaises(
             ValueError, lambda: ExtensionManager('dooku.test', silent=False))
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points')
+    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def test_silent_true(self, iter_ep):
         """
         The constructor don't has to raise exceptions if silent is True.
