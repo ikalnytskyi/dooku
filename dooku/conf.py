@@ -8,9 +8,20 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+import json
 import copy
 import collections
 import itertools
+
+# In real world there's a common practice to keep settings in YAMLs, since
+# it's very readable. But unfortunately the PyYAML module (which provides
+# stuff for loading YAMLs) isn't a part of Python standard library, so
+# we need to try load it safely. In case of success - the global name should
+# represent the module itself; otherwise - it should be None.
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 
 class Conf(collections.MutableMapping):
@@ -68,6 +79,15 @@ class Conf(collections.MutableMapping):
               'timezone': 'UTC+2',
               'population': '1 427 000', }, }, }
 
+    In addition to compound keys and update method, the class provides two
+    helpers - :meth:`from_json` and :meth:`from_yaml` - for loading and
+    updating a Conf instance from files. ::
+
+        conf = Conf(default_conf)
+        conf.from_json('path/to/user/conf.json')
+
+    .. note:: You have to install ``PyYAML`` before using :meth:`from_yaml`.
+
     :param confs:
         A list of dictionaries to create a Conf instance based on it.
         Each next dictionary overrides settings from the previous one.
@@ -85,6 +105,48 @@ class Conf(collections.MutableMapping):
 
         for conf in confs:
             self.update(copy.deepcopy(conf))
+
+    def from_json(self, filename, encoding='utf-8', silent=False):
+        """
+        Updates recursively the value in the the config from a JSON file.
+
+        :param filename: (str) the filename of the JSON file
+        :param silent: (bool) fails silently if something wrong with json file
+
+        .. versionadded:: 0.3.0
+        """
+        conf = {}
+        try:
+            with open(filename, encoding=encoding) as f:
+                conf = json.load(f)
+        except Exception:
+            if not silent:
+                raise
+        self.update(conf)
+
+    def from_yaml(self, filename, encoding='utf-8', silent=False):
+        """
+        Updates recursively the value in the the config from a YAML file.
+
+        The method requires the PyYAML to be installed.
+
+        :param filename: (str) the filename of the YAML file
+        :param silent: (bool) fails silently if something wrong with yaml file
+
+        .. versionadded:: 0.3.0
+        """
+        if not yaml:
+            raise AttributeError(
+                'You need to install PyYAML before using this method!')
+
+        conf = {}
+        try:
+            with open(filename, encoding=encoding) as f:
+                conf = yaml.load(f)
+        except Exception:
+            if not silent:
+                raise
+        self.update(conf)
 
     def update(self, iterable={}, **kwargs):
         """

@@ -8,14 +8,19 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+import os
 import collections
 
 from dooku.conf import Conf
 
-from . import DookuTestCase
+from . import DookuTestCase, mock
 
 
 class TestConf(DookuTestCase):
+
+    jsonfile = os.path.join(os.path.dirname(__file__), 'testdata', 'conf.json')
+    yamlfile = os.path.join(os.path.dirname(__file__), 'testdata', 'conf.yaml')
+    invalid = os.path.join(os.path.dirname(__file__), 'testdata', 'invalid')
 
     def setUp(self):
         """
@@ -126,6 +131,81 @@ class TestConf(DookuTestCase):
         }
 
         self.assertEqual(conf._data, result)
+
+    def test_from_json(self):
+        """
+        The from_json has to read conf from a given file and be capable to
+        make recursive update.
+        """
+        conf = Conf(self.source_conf)
+        conf.from_json(self.jsonfile)
+
+        result = {
+            'root': {
+                'one': {'a': 42, 'b': 2, 'z': 13},
+                'two': {'c': 3},
+                'three': [],
+            },
+            'non-root': [1, 2],
+        }
+
+        self.assertEqual(conf._data, result)
+
+    def test_from_json_raise_error(self):
+        """
+        The from_json has to raise error in case of invalid JSON.
+        """
+        conf = Conf(self.source_conf)
+        self.assertRaises(Exception, conf.from_json, self.invalid)
+
+    def test_from_json_silent_mode(self):
+        """
+        The from_json has to be capable fail silent in case of invalid JSON.
+        """
+        conf = Conf(self.source_conf)
+        conf.from_json(self.invalid, silent=True)
+
+    def test_from_yaml(self):
+        """
+        The from_yaml has to read conf from a given file and be capable to
+        make recursive update.
+        """
+        conf = Conf(self.source_conf)
+        conf.from_yaml(self.yamlfile)
+
+        result = {
+            'root': {
+                'one': {'a': 42, 'b': 2, 'z': 13},
+                'two': {'c': 3},
+                'three': [],
+            },
+            'non-root': [1, 2],
+        }
+
+        self.assertEqual(conf._data, result)
+
+    def test_from_yaml_raise_error(self):
+        """
+        The from_yaml has to raise error in case of invalid YAML.
+        """
+        conf = Conf(self.source_conf)
+        self.assertRaises(Exception, conf.from_yaml, self.invalid)
+
+    def test_from_yaml_silent_mode(self):
+        """
+        The from_yaml has to be capable fail silent in case of invalid YAML.
+        """
+        conf = Conf(self.source_conf)
+        conf.from_yaml(self.invalid, silent=True)
+
+    @mock.patch('dooku.conf.yaml', None)
+    def test_from_yaml_not_available(self):
+        """
+        The from_yaml has to raise AttributeError in case of PyYAML absence.
+        """
+        conf = Conf(self.source_conf)
+        self.assertRaisesRegexp(
+            AttributeError, 'PyYAML', conf.from_yaml, self.yamlfile)
 
     def test_getitem_simple_key(self):
         """

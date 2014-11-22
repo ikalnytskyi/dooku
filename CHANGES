@@ -4,6 +4,17 @@ ChangeLog
 Here you can see the list of changes between each Dooku release.
 
 
+Version 0.3.0
+-------------
+
+(release date to be announced)
+
+- Add ``dooku.conf.Conf.from_json`` method that loads and updates a conf
+  instance with data from a given JSON file.
+- Add ``dooku.conf.Conf.from_yaml`` method that loads and updates a conf
+  instance with data from a given YAML file.
+
+
 Version 0.2.0
 -------------
 

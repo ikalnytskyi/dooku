@@ -1,0 +1,8 @@
+root:
+   one:
+      a: 42
+      z: 13
+   three: []
+non-root:
+   - 1
+   - 2
