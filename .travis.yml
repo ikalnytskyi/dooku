@@ -17,3 +17,9 @@ install:
 
 script:
   - tox
+
+after_success:
+  # integrate coveralls
+  - pip install pytest-cov python-coveralls
+  - py.test tests/ --cov dooku/
+  - coveralls

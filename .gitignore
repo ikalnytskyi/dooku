@@ -9,6 +9,9 @@ build/
 dist/
 *.egg*
 
+# coverage
+.coverage
+
 # tox
 .tox/
 
