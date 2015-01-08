@@ -39,7 +39,7 @@ setup(
     author='Igor Kalnitsky',
     author_email='igor@kalnitsky.org',
 
-    packages=find_packages(exclude=('tests')),
+    packages=find_packages(exclude=('tests', )),
     test_suite='tests',
 
     classifiers=[
