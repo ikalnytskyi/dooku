@@ -16,7 +16,7 @@ from dooku import __version__ as dooku_version
 
 # project settings
 project = 'dooku'
-copyright = '2014, Igor Kalnitsky'
+copyright = '2015, Igor Kalnitsky'
 release = dooku_version
 version = re.sub('[^0-9.]', '', release)
 
