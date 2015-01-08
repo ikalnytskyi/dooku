@@ -13,7 +13,7 @@ Version 0.3.0
   instance with data from a given JSON file.
 - Add ``dooku.conf.Conf.from_yaml`` method that loads and updates a conf
   instance with data from a given YAML file.
-- Do not install ``tests`` package.
+- Do not install ``tests`` package (bugfix).
 
 
 Version 0.2.0

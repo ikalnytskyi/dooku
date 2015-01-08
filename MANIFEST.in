@@ -5,5 +5,5 @@ prune docs/_build
 recursive-include tests *
 recursive-exclude tests *.pyc *.pyo
 
-include CHANGES LICENSE README
+include README.rst CHANGES.rst LICENSE
 include tox.ini

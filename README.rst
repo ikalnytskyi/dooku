@@ -1,7 +1,14 @@
 Dooku
 =====
 
-  A set of libraries for everyday!
+.. image:: https://pypip.in/v/dooku/badge.png
+   :target: https://pypi.python.org/pypi/dooku
+
+.. image:: https://coveralls.io/repos/ikalnitsky/dooku/badge.png?branch=master
+   :target: https://coveralls.io/r/ikalnitsky/dooku?branch=master
+
+.. image:: https://travis-ci.org/ikalnitsky/dooku.svg?branch=master
+   :target: https://travis-ci.org/ikalnitsky/dooku
 
 
 What Is Dooku?
@@ -29,11 +36,11 @@ self-contained and powerful, exactly like this library itself.
 How To Install?
 ---------------
 
-Latest stable version:
+Latest stable version::
 
     $ [sudo] pip install dooku
 
-Latest upstream version:
+Latest upstream version::
 
     $ [sudo] pip install git+https://github.com/ikalnitsky/dooku.git
 
