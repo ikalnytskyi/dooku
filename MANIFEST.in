@@ -1,10 +1,9 @@
-include CHANGES
-include LICENSE
-include README
-
 recursive-include docs *
 recursive-exclude docs *.pyc *.pyo
 prune docs/_build
 
 recursive-include tests *
 recursive-exclude tests *.pyc *.pyo
+
+include CHANGES LICENSE README
+include tox.ini
