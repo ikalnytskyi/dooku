@@ -1,4 +1,4 @@
-ChangeLog
+Changelog
 =========
 
 Here you can see the list of changes between each Dooku release.
@@ -7,7 +7,7 @@ Here you can see the list of changes between each Dooku release.
 Version 0.3.0
 -------------
 
-(release date to be announced)
+Released on January 9, 2015.
 
 - Add ``dooku.conf.Conf.from_json`` method that loads and updates a conf
   instance with data from a given JSON file.
