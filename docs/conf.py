@@ -31,3 +31,9 @@ pygments_style = 'sphinx'
 # html output settings
 html_theme = 'default'
 html_static_path = ['_static']
+
+# use read-the-docs theme for local builds
+if os.environ.get('READTHEDOCS', None) != 'True':
+    import sphinx_rtd_theme
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
