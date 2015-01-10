@@ -21,18 +21,29 @@ of Dooku.
 The library is self-contained and there are no dependencies it requires.
 Just install it with ``pip`` and enjoy!
 
-    .. toctree::
-       :maxdepth: 2
 
-       algorithm
-       conf
-       datetime
-       decorator
-       ext
+Kind of User's Guide
+--------------------
 
-Some links if you interested in the project:
+.. toctree::
+   :maxdepth: 2
 
-* `Changes & News <changelog.html>`_
+   algorithm
+   conf
+   datetime
+   decorator
+   ext
+
+
+FYI
+---
+
+.. toctree::
+   :maxdepth: 2
+
+   changelog
+   license
+
 * `Sources on GitHub <https://github.com/ikalnitsky/dooku>`_
 * `Report a bug <https://github.com/ikalnitsky/dooku/issues>`_
 * `Support me via GitTip <https://www.gittip.com/ikalnitsky/>`_
