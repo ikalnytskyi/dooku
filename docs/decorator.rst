@@ -1,7 +1,7 @@
 .. _decorator:
 
-dooku.decorator
-===============
+Decorators
+==========
 
 Decorator is a part of Dooku that contains various useful decorators that
 could be helpful in daily usage basis. The module is very small now, so

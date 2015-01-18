@@ -1,7 +1,7 @@
 .. _conf:
 
-dooku.conf
-==========
+Config Manager
+==============
 
 The module provides convenient stuff to interact with dictionary instances
 that keep some configuration data.

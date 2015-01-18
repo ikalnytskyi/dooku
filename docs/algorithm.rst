@@ -1,7 +1,7 @@
 .. _algorithm:
 
-dooku.algorithm
-===============
+Algorithms
+==========
 
 This part of Dooku contains various algorithms that are missed in Python's
 standard library and here they are:

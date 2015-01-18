@@ -3,11 +3,6 @@
 Welcome To Dooku
 ================
 
-.. image:: _static/dooku.png
-   :alt: Dooku: a set of libraries for everyday
-   :align: center
-   :width: 200px
-
 Dooku is a set of libraries for the Python programming language that provides
 various useful stuff that you might need in everyday usage. The idea is
 to provide a set of libraries and useful functions, just like Boost does
@@ -20,6 +15,10 @@ of Dooku.
 
 The library is self-contained and there are no dependencies it requires.
 Just install it with ``pip`` and enjoy!
+
+.. code:: bash
+
+    $ [sudo] pip install dooku
 
 
 Kind of User's Guide
@@ -34,16 +33,5 @@ Kind of User's Guide
    decorator
    ext
 
-
-FYI
----
-
-.. toctree::
-   :maxdepth: 2
-
    changelog
    license
-
-* `Sources on GitHub <https://github.com/ikalnitsky/dooku>`_
-* `Report a bug <https://github.com/ikalnitsky/dooku/issues>`_
-* `Support me via GitTip <https://www.gittip.com/ikalnitsky/>`_

@@ -1,7 +1,7 @@
 .. _datetime:
 
-dooku.datetime
-==============
+Datetime Helpers
+================
 
 Dooku provides some missed primitives for datetime manipulating. This part
 was born during Holocron_ development where we were needed to do next things:

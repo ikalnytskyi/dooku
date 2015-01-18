@@ -21,7 +21,7 @@ release = dooku_version
 version = re.sub('[^0-9.]', '', release)
 
 # sphinx settings
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'alabaster']
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
@@ -29,11 +29,26 @@ exclude_patterns = ['_build']
 pygments_style = 'sphinx'
 
 # html output settings
-html_theme = 'default'
-html_static_path = ['_static']
+import alabaster
 
-# use read-the-docs theme for local builds
-if os.environ.get('READTHEDOCS', None) != 'True':
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme = 'alabaster'
+html_theme_path = [alabaster.get_path()]
+html_theme_options = {
+    'logo': 'dooku.png',
+    'description': 'a set of libraries for everyday!',
+    'gratipay_user': 'ikalnitsky',
+    'github_user': 'ikalnitsky',
+    'github_repo': 'dooku',
+    'github_button': True,
+    'github_banner': True,
+    'travis_button': True,
+    'extra_nav_links': {
+        'Issue Tracker': 'https://github.com/ikalnitsky/dooku/issues',
+    },
+}
+html_sidebars = {
+    '**': [
+        'about.html', 'navigation.html', 'searchbox.html', 'donate.html',
+    ]
+}
+html_static_path = ['_static']
