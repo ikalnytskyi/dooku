@@ -130,5 +130,5 @@ class Local(datetime.tzinfo):
         return datetime.timedelta(seconds=-offset)
 
     def tzname(self, dt):
-        return 'Local Time'
+        return time.tzname[self._is_dst(dt)]
 Local = Local()

@@ -3,6 +3,13 @@ Changes
 
 Here you can see the list of changes between each Dooku release.
 
+Version 0.4.0
+-------------
+
+(release date to be announced)
+
+- ``dooku.datetime.Local.tzname`` now returns a timezone name.
+
 
 Version 0.3.0
 -------------
