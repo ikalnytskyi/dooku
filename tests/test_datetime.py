@@ -8,15 +8,18 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
 import re
 import time
 import datetime
 
 from dooku.datetime import UTC, Local, to_iso8601
+
 from . import DookuTestCase
 
 
 class TestDatetimeTz(DookuTestCase):
+
     def test_utc_is_instance(self):
         """
         The UTC tz imlementation has to be an instance of built-in

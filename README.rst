@@ -1,16 +1,8 @@
-Dooku - set of libraries for everyday!
-==========================================
+====================================================
+ Dooku: a set of libraries for the Force-sensitives
+====================================================
 
-:Version:   0.4.0.dev0
-:Docs:      https://dooku.readthedocs.org
-:Source:    https://github.com/ikalnitsky/dooku
-:Keywords:  conf manager, extension manager, algorithms,
-            datetime timezones, datetime formatters
-:Status:    |travis-ci|  |coveralls|
-
-
-What Is Dooku?
---------------
+|travis-ci|  |coveralls|
 
 Dooku is a set of libraries for Python programming language that provides
 various useful stuff that you might need in everyday usage. The idea is to
@@ -22,12 +14,27 @@ some kind of incubator where various developers can test and evolve their
 projects. So please **don't hesitate** to propose your library to be a
 part of Dooku.
 
+Feel the Force? Then try Dooku!
 
-Why The Name Dooku?
--------------------
+.. code:: bash
 
-Dooku is an interesting character from the Star Wars franchise. He is
-self-contained and powerful, exactly like this library itself.
+    $ [sudo] pip install dooku
+
+
+Features
+--------
+
+Here is an incomplete list of features:
+
+* Missed Python `algorithms`_.
+* Convenient `configuration manager`_.
+* `Datetime` helpers for managing timezones.
+* Set of useful `decorators`_.
+* Simple & powerful `extension manager`_.
+
+
+Check out Dooku's documentation for further information -
+http://dooku.readthedocs.org/.
 
 
 What Do I Require?
@@ -36,33 +43,27 @@ What Do I Require?
 Different parts of Dooku may have different requirements, but generally
 requirements are:
 
-* Python 3.2 or higher (+ PyPy3)
+* Python 2.7 or higher (+ PyPy / PyPy3)
 * GNU/Linux, Unix, OS X, Windows
 
 
-How To Install?
----------------
+Why The Name Dooku?
+-------------------
 
-Latest stable version:
-
-.. code:: bash
-
-    $ [sudo] pip install dooku
-
-Latest upstream version:
-
-.. code:: bash
-
-    $ [sudo] pip install git+https://github.com/ikalnitsky/dooku.git
+Dooku is an interesting character from the Star Wars franchise. He is
+self-contained and powerful, exactly like this library itself.
 
 
-How To Start?
--------------
-
-Just read the documentation http://dooku.readthedocs.org/ and enjoy!
-
+.. Links
 
 .. _Boost: http://www.boost.org
+.. _algorithms: http://dooku.readthedocs.org/en/latest/algorithm.html
+.. _configuration manager: http://dooku.readthedocs.org/en/latest/conf.html
+.. _Datetime: http://dooku.readthedocs.org/en/latest/datetime.html
+.. _decorators: http://dooku.readthedocs.org/en/latest/decorator.html
+.. _extension manager: http://dooku.readthedocs.org/en/latest/ext.html
+
+.. Images
 
 .. |travis-ci| image::
        https://travis-ci.org/ikalnitsky/dooku.svg?branch=master

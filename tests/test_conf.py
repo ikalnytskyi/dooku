@@ -8,12 +8,15 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
 import os
 import collections
 
+import mock
+
 from dooku.conf import Conf
 
-from . import DookuTestCase, mock
+from . import DookuTestCase
 
 
 class TestConf(DookuTestCase):

@@ -8,8 +8,12 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
+import mock
+
 from dooku.ext import ExtensionManager
-from . import DookuTestCase, mock
+
+from . import DookuTestCase
 
 
 class TestExtensionManager(DookuTestCase):

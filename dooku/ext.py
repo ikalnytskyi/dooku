@@ -9,6 +9,7 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
 import pkg_resources
 
 

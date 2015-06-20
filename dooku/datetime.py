@@ -10,10 +10,7 @@
     :license: BSD, see LICENSE for details
 """
 
-# despite the fact we use python3 only, we still need this statement
-# in order to do not fail during sphinx execution.
 from __future__ import absolute_import
-
 
 import re
 import time

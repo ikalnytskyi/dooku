@@ -8,10 +8,16 @@
     :copyright: (c) 2014, Igor Kalnitsky
     :license: BSD, see LICENSE for details
 """
+
 import json
 import copy
 import collections
 import itertools
+
+# In Py 2.7 a built-in open function doesn't support an encoding argument,
+# so let's use one from the io package in order to get behaviour similar
+# to Py 3.x.
+from io import open
 
 # In real world there's a common practice to keep settings in YAMLs, since
 # it's very readable. But unfortunately the PyYAML module (which provides
