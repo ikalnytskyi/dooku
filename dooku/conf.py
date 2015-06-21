@@ -244,4 +244,4 @@ class Conf(collections.MutableMapping):
         return str(self._data)
 
     def __repr__(self):
-        return '<{0} {1}>'.format(self.__class__.__name__, repr(self._data))
+        return repr(self._data)
