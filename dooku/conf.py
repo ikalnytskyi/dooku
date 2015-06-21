@@ -106,23 +106,38 @@ class Conf(collections.MutableMapping):
         for conf in confs:
             self.update(copy.deepcopy(conf))
 
-    def from_json(self, filename, encoding='utf-8', silent=False):
+    def from_file(self, loader, filename, encoding='utf-8', silent=False):
         """
-        Updates recursively the value in the the config from a JSON file.
+        Updates recursively the value in the the config from some file.
 
-        :param filename: (str) the filename of the JSON file
+        :param loader: (function) a function that receives a file object
+            and returns a dictionary to be merged into settings
+        :param filename: (str) a filename to be opened
+        :param encoding: (str) an encoding of the filename
         :param silent: (bool) fails silently if something wrong with json file
 
-        .. versionadded:: 0.3.0
+        .. versionadded:: 0.4.0
         """
         conf = {}
         try:
             with open(filename, encoding=encoding) as f:
-                conf = json.load(f)
+                conf = loader(f)
         except Exception:
             if not silent:
                 raise
         self.update(conf)
+
+    def from_json(self, filename, encoding='utf-8', silent=False):
+        """
+        Updates recursively the value in the the config from a JSON file.
+
+        :param filename: (str) a filename of the JSON file
+        :param encoding: (str) an encoding of the filename
+        :param silent: (bool) fails silently if something wrong with json file
+
+        .. versionadded:: 0.3.0
+        """
+        self.from_file(json.load, filename, encoding, silent)
 
     def from_yaml(self, filename, encoding='utf-8', silent=False):
         """
@@ -130,7 +145,8 @@ class Conf(collections.MutableMapping):
 
         The method requires the PyYAML to be installed.
 
-        :param filename: (str) the filename of the YAML file
+        :param filename: (str) a filename of the YAML file
+        :param encoding: (str) an encoding of the filename
         :param silent: (bool) fails silently if something wrong with yaml file
 
         .. versionadded:: 0.3.0
@@ -139,14 +155,7 @@ class Conf(collections.MutableMapping):
             raise AttributeError(
                 'You need to install PyYAML before using this method!')
 
-        conf = {}
-        try:
-            with open(filename, encoding=encoding) as f:
-                conf = yaml.load(f)
-        except Exception:
-            if not silent:
-                raise
-        self.update(conf)
+        self.from_file(yaml.load, filename, encoding, silent)
 
     def update(self, iterable={}, **kwargs):
         """
