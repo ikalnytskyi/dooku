@@ -9,6 +9,8 @@
     :license: BSD, see LICENSE for details
 """
 
+from __future__ import absolute_import
+
 import json
 import copy
 import collections
@@ -244,4 +246,4 @@ class Conf(collections.MutableMapping):
         return str(self._data)
 
     def __repr__(self):
-        return '<{0} {1}>'.format(self.__class__.__name__, repr(self._data))
+        return repr(self._data)

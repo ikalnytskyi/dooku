@@ -8,10 +8,13 @@ Version 0.4.0
 
 (release date to be announced)
 
-- ``dooku.datetime.Local.tzname`` now returns a timezone name.
+- Add Python 2.7 support.
 - Add ``dooku.conf.Conf.from_file`` method to load settings from
   a custom file format.
-- Add Python 2.7 support.
+- Add ``dooku.iteritems`` module with ``chunk_by`` iteration
+  algorithm.
+- ``dooku.datetime.Local.tzname`` now returns a timezone name.
+- ``dooku.conf.Conf`` now has representation similar to ``dict``.
 
 
 Version 0.3.0
