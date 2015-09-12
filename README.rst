@@ -28,7 +28,7 @@ Here is an incomplete list of features:
 
 * Missed Python `algorithms`_.
 * Convenient `configuration manager`_.
-* `Datetime` helpers for managing timezones.
+* `Datetime`_ helpers for managing timezones.
 * Set of useful `decorators`_.
 * Simple & powerful `extension manager`_.
 
