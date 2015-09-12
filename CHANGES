@@ -6,7 +6,7 @@ Here you can see the list of changes between each Dooku release.
 Version 0.4.0
 -------------
 
-(release date to be announced)
+Released on September 12, 2015.
 
 - Add Python 2.7 support.
 - Add ``dooku.conf.Conf.from_file`` method to load settings from
