@@ -32,6 +32,7 @@ Kind of User's Guide
    datetime
    decorator
    ext
+   itertools
 
    changelog
    license
