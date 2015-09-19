@@ -33,7 +33,7 @@ class ExtensionManager(object):
     `entry_points`_. So the first thing you have to do is to declare
     your plugin in ``setup.py`` and then install it::
 
-        sutup(
+        setup(
             # ...
             entry_points={
                 'my_plugin_namespace': [
