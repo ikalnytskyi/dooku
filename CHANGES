@@ -8,6 +8,10 @@ Version 0.5.0
 
 (release date to be announced)
 
+- Drop Python 3.2 support. Almost everyone in Python community agreed
+  to use Python 3.3 and above.
+- Add Python 3.5 support.
+
 
 Version 0.4.0
 -------------
