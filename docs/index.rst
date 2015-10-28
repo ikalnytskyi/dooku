@@ -1,7 +1,8 @@
 :orphan:
 
-Welcome To Dooku
-================
+==================
+ Welcome To Dooku
+==================
 
 Dooku is a set of libraries for the Python programming language that provides
 various useful stuff that you might need in everyday usage. The idea is
@@ -22,7 +23,7 @@ Just install it with ``pip`` and enjoy!
 
 
 Kind of User's Guide
---------------------
+====================
 
 .. toctree::
    :maxdepth: 2

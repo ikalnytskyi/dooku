@@ -1,20 +1,21 @@
 .. _license:
 
-License
-=======
+=========
+ License
+=========
 
 Dooku is licensed under a three clause BSD License. It basically means:
 do whatever you want with it as long as the copyright are present.
 
 
 Dooku
------
+=====
 
 .. include:: ../LICENSE
 
 
 Logo
-----
+====
 
 :copyright:
     Copyright (c) 2010, Marijn Rooijakkers

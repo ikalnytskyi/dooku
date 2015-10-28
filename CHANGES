@@ -1,22 +1,19 @@
-Changes
-=======
+=========
+ Changes
+=========
 
 Here you can see the list of changes between each Dooku release.
 
-Version 0.5.0
--------------
-
-(release date to be announced)
+0.5.0 (in development)
+======================
 
 - Drop Python 3.2 support. Almost everyone in Python community agreed
   to use Python 3.3 and above.
 - Add Python 3.5 support.
 
 
-Version 0.4.0
--------------
-
-Released on September 12, 2015.
+0.4.0 (2015-09-12)
+==================
 
 - Add Python 2.7 support.
 - Add ``dooku.conf.Conf.from_file`` method to load settings from
@@ -27,10 +24,8 @@ Released on September 12, 2015.
 - ``dooku.conf.Conf`` now has representation similar to ``dict``.
 
 
-Version 0.3.0
--------------
-
-Released on January 9, 2015.
+0.3.0 (2015-01-09)
+==================
 
 - Add ``dooku.conf.Conf.from_json`` method that loads and updates a conf
   instance with data from a given JSON file.
@@ -39,18 +34,14 @@ Released on January 9, 2015.
 - Do not install ``tests`` package (bugfix).
 
 
-Version 0.2.0
--------------
-
-Released on November 7, 2014.
+0.2.0 (2014-11-07)
+==================
 
 - Use ``collections.MutableMapping`` as base class for ``dooku.conf.Conf``.
 - Add the changelog page to documentation.
 
 
-Version 0.1.0
--------------
-
-Released on October 3, 2014.
+0.1.0 (2014-10-03)
+==================
 
 - First public release.

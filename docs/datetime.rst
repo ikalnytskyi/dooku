@@ -1,7 +1,8 @@
 .. _datetime:
 
-Datetime Helpers
-================
+==================
+ Datetime Helpers
+==================
 
 Dooku provides some missed primitives for datetime manipulating. This part
 was born during Holocron_ development where we were needed to do next things:
@@ -13,7 +14,7 @@ was born during Holocron_ development where we were needed to do next things:
 
 
 Timezones
----------
+=========
 
 .. autodata:: dooku.datetime.UTC
    :annotation:
@@ -22,7 +23,7 @@ Timezones
 
 
 Formatters
-----------
+==========
 
 .. autofunction:: dooku.datetime.to_iso8601
 .. autofunction:: dooku.datetime.to_rfc3339

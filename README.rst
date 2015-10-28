@@ -2,7 +2,7 @@
  Dooku: a set of libraries for the Force-sensitives
 ====================================================
 
-|travis-ci|  |coveralls|
+|pypi-version| |license| |travis-ci| |coveralls|
 
 Dooku is a set of libraries for Python programming language that provides
 various useful stuff that you might need in everyday usage. The idea is to
@@ -64,13 +64,14 @@ self-contained and powerful, exactly like this library itself.
 .. _extension manager: http://dooku.readthedocs.org/en/latest/ext.html
 
 .. Images
+.. |pypi-version| image:: https://img.shields.io/pypi/v/dooku.svg
+   :target: https://pypi.python.org/pypi/dooku
 
-.. |travis-ci| image::
-       https://travis-ci.org/ikalnitsky/dooku.svg?branch=master
+.. |license| image:: https://img.shields.io/pypi/l/dooku.svg
+   :target: https://pypi.python.org/pypi/dooku
+
+.. |travis-ci| image:: https://img.shields.io/travis/ikalnitsky/dooku/master.svg
    :target: https://travis-ci.org/ikalnitsky/dooku
-   :alt: Travis CI: continuous integration status
 
-.. |coveralls| image::
-       https://coveralls.io/repos/ikalnitsky/dooku/badge.png?branch=master
-   :target: https://coveralls.io/r/ikalnitsky/dooku?branch=master
-   :alt: Coverall: code coverage status
+.. |coveralls| image:: https://img.shields.io/coveralls/ikalnitsky/dooku.svg
+   :target: https://coveralls.io/r/ikalnitsky/dooku

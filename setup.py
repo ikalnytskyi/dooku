@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import os
+
 from io import open
 from setuptools import setup, find_packages
 
@@ -8,28 +10,37 @@ from dooku import __version__ as dooku_version
 from dooku import __license__ as dooku_license
 
 
-with open('README.rst', 'r', encoding='utf-8') as f:
-    LONG_DESCRIPTION = f.read()
+here = os.path.dirname(__file__)
+
+with open(os.path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
+    long_description = f.read()
 
 
 setup(
     name='dooku',
     version=dooku_version,
-    license=dooku_license,
+
     description='Daily set of libraries for the Force-sensitives. =/',
-    long_description=LONG_DESCRIPTION,
-    author='Igor Kalnitsky',
-    author_email='igor@kalnitsky.org',
+    long_description=long_description,
+    license=dooku_license,
     url='https://github.com/ikalnitsky/dooku',
 
-    packages=find_packages(exclude=['tests']),
+    author='Igor Kalnitsky',
+    author_email='igor@kalnitsky.org',
+
+    packages=find_packages(exclude=['docs', 'tests*']),
     test_suite='tests',
     platforms=['any'],
     zip_safe=False,
 
+    tests_require=['mock >= 1.1.0', 'PyYAML'],
+
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Utilities',
+
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
@@ -39,7 +50,5 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
-        'Topic :: Software Development :: Libraries',
-        'Topic :: Utilities',
     ],
 )
