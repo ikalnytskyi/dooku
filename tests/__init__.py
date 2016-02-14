@@ -26,3 +26,4 @@ if PY2:
     # fix differences in unittest module between Py 2.x and Py 3.x
     DookuTestCase.assertRegex = DookuTestCase.assertRegexpMatches
     DookuTestCase.assertNotRegex = DookuTestCase.assertNotRegexpMatches
+    DookuTestCase.assertCountEqual = DookuTestCase.assertItemsEqual

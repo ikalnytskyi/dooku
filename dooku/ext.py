@@ -10,6 +10,9 @@
     :license: BSD, see LICENSE for details
 """
 
+from __future__ import absolute_import
+
+import itertools
 import pkg_resources
 
 
@@ -57,7 +60,8 @@ class ExtensionManager(object):
     :param namespace:
         A namespace to import from as string.
     :param names:
-        A list of objects to import; imports all if ``None``.
+        A list of objects to import; imports all if ``None``. If passed
+        it specifies an order of imports.
     :param silent:
         Skip loading errors if ``True``; otherwise - throw exception.
 
@@ -72,18 +76,21 @@ class ExtensionManager(object):
         #: it's name, we have to save this info here for further usage.
         self._extensions = {}
 
-        # search for extensions in a given namespace
-        for entry_point in pkg_resources.iter_entry_points(namespace):
-            if names is not None and entry_point.name not in names:
-                continue
+        # if names is passed, let's discover extensions in passed order
+        if names is not None:
+            entrypoints = itertools.chain.from_iterable(
+                pkg_resources.iter_entry_points(namespace, name)
+                for name in names)
+        else:
+            entrypoints = pkg_resources.iter_entry_points(namespace)
 
+        # load extensions
+        for entrypoint in entrypoints:
             try:
-                ext = entry_point.load()
+                ext = entrypoint.load()
 
-                if entry_point.name not in self._extensions:
-                    self._extensions[entry_point.name] = []
-                self._extensions[entry_point.name].append(ext)
-
+                self._extensions.setdefault(entrypoint.name, [])
+                self._extensions[entrypoint.name].append(ext)
             except Exception:
                 if not silent:
                     raise

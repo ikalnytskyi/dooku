@@ -10,6 +10,7 @@ Here you can see the list of changes between each Dooku release.
 - Drop Python 3.2 support. Almost everyone in Python community agreed
   to use Python 3.3 and above.
 - Add Python 3.5 support.
+- ``dooku.ext.ExtensionManager`` starts loading extensions in passed order.
 
 
 0.4.0 (2015-09-12)

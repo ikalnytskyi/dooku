@@ -9,6 +9,8 @@
     :license: BSD, see LICENSE for details
 """
 
+import os
+import pkg_resources
 import mock
 
 from dooku.ext import ExtensionManager
@@ -16,35 +18,79 @@ from dooku.ext import ExtensionManager
 from . import DookuTestCase
 
 
+class One(object):
+    pass
+
+
+class Two(object):
+    pass
+
+
+class NewTwo(object):
+    pass
+
+
 class TestExtensionManager(DookuTestCase):
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
-    def setUp(self, iter_ep):
-        """
-        Prepare extensions for each testcase.
-        """
-        # Holy crap! The mock library can't work with "name" attribute,
-        # so we need this tricks to workaround this.
-        entry_points = [mock.Mock(), mock.Mock(), mock.Mock()]
-        type(entry_points[0]).name = mock.PropertyMock(return_value='one')
-        type(entry_points[1]).name = mock.PropertyMock(return_value='two')
-        type(entry_points[2]).name = mock.PropertyMock(return_value='two')
+    # namespace to be used to export extensions via entry points
+    namespace = 'dooku.tests'
 
-        iter_ep.return_value = entry_points
+    def _get_entry_points(self, names, load_fn=None):
+        """
+        Prepares and returns named mocks with optional .load function.
+        """
+        rv = []
 
-        self.ext_manager = ExtensionManager('dooku.test')
-        self.entry_points = entry_points
+        for name in names:
+            rv.append(mock.Mock())
+            if load_fn is not None:
+                type(rv[-1]).load = load_fn
+            # Holy crap! The mock library can't work with "name"
+            # attribute, so we need this trick as workaround.
+            type(rv[-1]).name = name
+
+        return rv
+
+    def setUp(self):
+        # create a fake distribution that will be used to export some
+        # extensions via entry points
+        fake_dist_1 = pkg_resources.Distribution(
+            project_name='fake_project_1',
+            version='0.1',
+            location=os.path.dirname(__file__))
+        fake_dist_2 = pkg_resources.Distribution(
+            project_name='fake_project_2',
+            version='0.1',
+            location=os.path.dirname(__file__))
+
+        # unfortunately, there's no public api for registring new entry
+        # points so no choice but use internal one
+        fake_dist_1._ep_map = {
+            self.namespace: {
+                'one': pkg_resources.EntryPoint.parse(
+                    'one = %s:One' % __name__, dist=fake_dist_1),
+                'two': pkg_resources.EntryPoint.parse(
+                    'two = %s:Two' % __name__, dist=fake_dist_1),
+            }}
+        fake_dist_2._ep_map = {
+            self.namespace: {
+                'two': pkg_resources.EntryPoint.parse(
+                    'two = %s:NewTwo' % __name__, dist=fake_dist_2),
+            }}
+
+        # register fake distributions within pkg_resources
+        pkg_resources.working_set.add(fake_dist_1)
+        pkg_resources.working_set.add(fake_dist_2)
+
+        self.ext_manager = ExtensionManager(self.namespace)
 
     def test_get(self):
         """
         The get method has to behave exactly like a dict's one.
         """
-        self.assertEqual(
-            self.ext_manager.get('one'), self.entry_points[0].load())
-        self.assertEqual(
-            self.ext_manager.get('two'), self.entry_points[1].load())
-        self.assertNotEqual(
-            self.ext_manager.get('two'), self.entry_points[2].load())
+        self.assertEqual(self.ext_manager.get('one'), One)
+        self.assertEqual(self.ext_manager.get('two'), Two)
+        self.assertNotEqual(self.ext_manager.get('two'), NewTwo)
 
         self.assertIsNone(self.ext_manager.get('three'))
         self.assertEqual(self.ext_manager.get('three', 42), 42)
@@ -55,11 +101,8 @@ class TestExtensionManager(DookuTestCase):
         name. In case there're no extensions - the empty list has to be
         returned.
         """
-        self.assertEqual(
-            self.ext_manager.getall('one'), [self.entry_points[0].load()])
-        self.assertEqual(
-            self.ext_manager.getall('two'),
-            [self.entry_points[1].load(), self.entry_points[2].load()])
+        self.assertEqual(self.ext_manager.getall('one'), [One])
+        self.assertEqual(self.ext_manager.getall('two'), [Two, NewTwo])
 
         self.assertEqual(self.ext_manager.getall('three'), [])
 
@@ -77,12 +120,9 @@ class TestExtensionManager(DookuTestCase):
         """
         The __getitem__ has to behave exactly like a dict's one.
         """
-        self.assertEqual(
-            self.ext_manager['one'], self.entry_points[0].load())
-        self.assertEqual(
-            self.ext_manager['two'], self.entry_points[1].load())
-        self.assertNotEqual(
-            self.ext_manager['two'], self.entry_points[2].load())
+        self.assertEqual(self.ext_manager['one'], One)
+        self.assertEqual(self.ext_manager['two'], Two)
+        self.assertNotEqual(self.ext_manager['two'], NewTwo)
 
         self.assertRaises(KeyError, lambda: self.ext_manager['three'])
 
@@ -90,7 +130,7 @@ class TestExtensionManager(DookuTestCase):
         """
         The names method has to return a set of extension names.
         """
-        self.assertEqual(self.ext_manager.names(), set(['one', 'two']))
+        self.assertCountEqual(self.ext_manager.names(), ['one', 'two'])
 
     def test_contains(self):
         """
@@ -105,46 +145,68 @@ class TestExtensionManager(DookuTestCase):
         The __iter__ has to return an iterator over all extensions where the
         iteration element is (name, extension).
         """
-        self.assertEqual(set(i for i in self.ext_manager), set([
-            ('one', self.entry_points[0].load()),
-            ('two', self.entry_points[1].load()),
-            ('two', self.entry_points[2].load()), ]))
+        self.assertCountEqual([i for i in self.ext_manager], [
+            ('one', One),
+            ('two', Two),
+            ('two', NewTwo), ])
 
-    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
-    def test_constructor_w_names(self, iter_ep):
+    def test_constructor_w_names(self):
         """
         If the names was passed to the constructor, only those extensions
         has to be loaded.
         """
-        iter_ep.return_value = self.entry_points
-        self.ext_manager = ExtensionManager('dooku.test', ['two'])
+        self.ext_manager = ExtensionManager(self.namespace, ['two'])
 
-        self.assertEqual(set(i for i in self.ext_manager), set([
-            ('two', self.entry_points[1].load()),
-            ('two', self.entry_points[2].load()), ]))
+        self.assertCountEqual([i for i in self.ext_manager], [
+            ('two', Two),
+            ('two', NewTwo), ])
+
+    @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
+    def test_keep_load_order(self, iter_ep):
+        """
+        The constructor has to load extensions is passed order.
+        """
+        order = []
+
+        def load_trap(self, *args):
+            order.append(self.name)
+
+        entry_points = self._get_entry_points(['a', 'b', 'c'], load_trap)
+        iter_ep.side_effect = [
+            [entry_points[2]],
+            [entry_points[0]],
+            [entry_points[1]], ]
+
+        self.ext_manager = ExtensionManager(self.namespace, ['c', 'a', 'b'])
+        self.assertEqual(order, ['c', 'a', 'b'])
 
     @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def test_silent_false(self, iter_ep):
         """
         The constructor has to raise exceptions if silent is False.
         """
-        self.entry_points[1].load.side_effect = ValueError('error')
-        iter_ep.return_value = self.entry_points
+        entry_points = self._get_entry_points(['a', 'b', 'c'])
+        entry_points[1].load.side_effect = ValueError('error')
+
+        iter_ep.return_value = entry_points
 
         self.assertRaises(
-            ValueError, lambda: ExtensionManager('dooku.test', silent=False))
+            ValueError,
+            lambda: ExtensionManager(self.namespace, silent=False))
 
     @mock.patch('dooku.ext.pkg_resources.iter_entry_points', autospec=True)
     def test_silent_true(self, iter_ep):
         """
         The constructor don't has to raise exceptions if silent is True.
         """
-        self.entry_points[0].load.side_effect = ValueError('error')
-        iter_ep.return_value = self.entry_points
+        entry_points = self._get_entry_points(['a', 'b', 'c'])
+        entry_points[0].load.side_effect = ValueError('error')
 
-        self.ext_manager = ExtensionManager('dooku.test', silent=True)
+        iter_ep.return_value = entry_points
+
+        self.ext_manager = ExtensionManager(self.namespace, silent=True)
 
         self.assertEqual(set(i for i in self.ext_manager), set([
-            ('two', self.entry_points[1].load()),
-            ('two', self.entry_points[2].load()), ]))
-        self.assertEqual(self.ext_manager.names(), set(['two']))
+            ('b', entry_points[1].load()),
+            ('c', entry_points[2].load()), ]))
+        self.assertCountEqual(self.ext_manager.names(), ['b', 'c'])
